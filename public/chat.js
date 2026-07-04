@@ -153,6 +153,8 @@ async function requestStep(step, pipelineMessages) {
     throw new Error(data.error || "Could not reach the AI service. Please try again.");
   }
 
+  // Feed each stage result into the next request so later stages can build on
+  // earlier structured output without exposing those drafts in the visible chat.
   pipelineMessages.push({
     role: "assistant",
     content: JSON.stringify(data),

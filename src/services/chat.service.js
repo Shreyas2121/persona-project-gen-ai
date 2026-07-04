@@ -33,6 +33,8 @@ function normalizeMessages(messages) {
     throw new ApiError(400, "messages must be a non-empty array.");
   }
 
+  // Trust only chat roles we send to the model, then cap history to keep prompts
+  // predictable and avoid letting old turns dominate the current persona response.
   return messages
     .filter((message) => message && ALLOWED_MESSAGE_ROLES.has(message.role))
     .map((message) => ({
@@ -48,6 +50,8 @@ function normalizeMessages(messages) {
 }
 
 function buildStepInstruction(step) {
+  // Each request advances exactly one pipeline stage; the browser controls the
+  // sequence so we can show progress and keep intermediate reasoning separate.
   return {
     role: "system",
     content: [

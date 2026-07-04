@@ -8,6 +8,8 @@ import pageRoutes from "./routes/page.routes.js";
 
 const app = express();
 
+// Keep the public chat endpoint bounded so a shared demo cannot burn through
+// the API quota from one browser or scripted client.
 const chatRateLimiter = rateLimit({
   windowMs: env.rateLimitWindowMinutes * 60 * 1000,
   limit: env.rateLimitMaxRequests,
@@ -42,6 +44,8 @@ app.use((error, req, res, next) => {
 
   let message = error.message || "Something went wrong.";
 
+  // Normalize provider and server failures into messages that are useful to
+  // users without leaking implementation details from upstream errors.
   if (statusCode === 401) {
     message = "OpenAI API key is missing or invalid. Please check the server environment variables.";
   } else if (statusCode === 429) {

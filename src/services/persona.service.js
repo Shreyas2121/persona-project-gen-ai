@@ -14,6 +14,8 @@ export function assertValidPersona(persona) {
 }
 
 function getPromptFile(persona) {
+  // Prompt variants let us trade response fidelity against token cost without
+  // changing the route or service contract.
   if (env.promptMode === "full") {
     return `${persona}.md`;
   }
