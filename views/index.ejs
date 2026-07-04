@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Persona Mentor Chat</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="brand-block">
+          <div class="brand-mark">P</div>
+          <div>
+            <p class="eyebrow">Persona AI</p>
+            <h1>Mentor Chat</h1>
+          </div>
+        </div>
+
+        <div class="persona-tabs" role="radiogroup" aria-label="Persona selector">
+          <% personas.forEach((persona, index) => { %>
+            <button
+              class="persona-tab <%= index === 0 ? 'is-active' : '' %>"
+              type="button"
+              role="radio"
+              aria-checked="<%= index === 0 ? 'true' : 'false' %>"
+              data-persona="<%= persona.id %>"
+            >
+              <img class="persona-avatar" src="/images/<%= persona.id %>.jpg" alt="<%= persona.label %>" />
+              <span class="persona-copy">
+                <span class="persona-name"><%= persona.id === 'hitesh' ? 'Hitesh' : 'Piyush' %></span>
+                <span class="persona-note"><%= persona.id === 'hitesh' ? 'Foundation-first' : 'Architecture-first' %></span>
+              </span>
+            </button>
+          <% }) %>
+        </div>
+
+        <div class="header-actions">
+          <div id="requestState" class="request-state" aria-live="polite">Ready</div>
+          <button id="clearChat" class="ghost-button" type="button">Clear</button>
+        </div>
+      </header>
+
+      <section class="persona-strip" aria-label="Active persona">
+        <img id="activePersonaImage" class="active-persona-image" src="/images/hitesh.jpg" alt="Hitesh Choudhary style" />
+        <div>
+          <p id="activePersonaLabel" class="chat-kicker">Hitesh Choudhary style</p>
+          <p class="persona-disclaimer">Inspired by public teaching style only. Not the real person or an endorsement. Public demo has usage limits to protect API credits.</p>
+        </div>
+      </section>
+
+      <section id="messages" class="messages" aria-live="polite">
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">AI</div>
+          <h2>Ask like you would ask a mentor</h2>
+          <p>Get help with coding fundamentals, DSA, system design, DevOps, backend architecture, and AI apps.</p>
+          <div class="prompt-row">
+            <button type="button" class="prompt-chip" data-prompt="Can I learn React without learning JavaScript properly?">React without JS?</button>
+            <button type="button" class="prompt-chip" data-prompt="How should I start learning system design?">System design path</button>
+            <button type="button" class="prompt-chip" data-prompt="DSA ke liye C++ use karu ya Java?">DSA language</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="errorBanner" class="error-banner" hidden></div>
+
+      <footer class="composer-shell">
+        <form id="chatForm" class="composer">
+          <textarea id="messageInput" rows="1" maxlength="1200" placeholder="Ask anything about coding, DSA, system design, DevOps, or AI apps..."></textarea>
+          <button id="sendButton" type="submit">Send</button>
+        </form>
+      </footer>
+          <section class="about-project" aria-label="About this project">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>Built as an AI persona learning project</h2>
+        </div>
+        <div class="about-grid">
+          <article>
+            <h3>Inspired, not impersonating</h3>
+            <p>The mentors are inspired by public teaching styles only. The app does not claim to be the real person or imply endorsement.</p>
+          </article>
+          <article>
+            <h3>Public data preparation</h3>
+            <p>Persona rules were prepared from public videos, websites, social posts, AI-assisted summaries, and manual review.</p>
+          </article>
+          <article>
+            <h3>Demo limits</h3>
+            <p>Input length and request limits are enabled to protect API credits while keeping the demo usable.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="/chat.js"></script>
+  </body>
+</html>
+
+
+
